@@ -15,8 +15,8 @@ const productSchema = new mongoose.Schema({
             default: 'INR',
             enum : ["INR", "USD"]
         }
-    } ,
-    category: String
+    } 
+    // category: String
 })
 
 
