@@ -19,17 +19,23 @@ const options = {
   
   try {
     const order = await razorpay.orders.create(options);
-    res.status(200).json(order);
 
     const newPayment = await paymentModel.create({
       orderId: order.id,
-      amount: order.amount,
+      price: {
+        amount: order.amount,
+        currency: order.currency
+      },
       currency: order.currency,
       status: 'PENDING',
     });
 
+    console.log('Payment saved:', newPayment); // payments details saved in database
+    res.status(200).json(order);
+
   } catch (error) {
-    res.status(500).send('Error creating order');
+    console.error('Error creating order:', error);
+    res.status(500).json({ error: 'Error creating order' });
   }
 }
 
